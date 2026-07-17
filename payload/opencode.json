@@ -1,68 +1,58 @@
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/opencode.schema.json",
-  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
-  "mcpServers": {
-    "mem0": {
-      "command": "${PYTHON_PATH}",
-      "args": ["${CONFIG_DIR}/mem0_mcp.py"],
-      "env": {
-        "GOOGLE_API_KEY": "${GO_API_KEY}"
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "@tarquinen/opencode-dcp@latest",
+    "oh-my-openagent@latest",
+    "@ramtinj95/opencode-tokenscope",
+    "opencode-firecrawl",
+    "superpowers@git+https://github.com/obra/superpowers.git"
+  ],
+  "provider": {
+    "llm-gateway": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "${LLM_BASE_URL}",
+        "apiKey": "${LLM_API_KEY}"
+      },
+      "models": {
+        "${MODEL_ID}": {
+          "name": "${MODEL_NAME}"
+        }
       }
-    },
-    "codegraph": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@opencode-ai/codegraph",
-        "run",
-        "--project",
-        "${CONFIG_DIR}/.."
-      ]
-    },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@context7/context7-mcp-server"]
+    }
+  },
+  "instructions": ["AGENTS.md"],
+  "formatter": {
+    "prettier": {
+      "command": ["npx", "prettier", "--write", "$FILE"]
+    }
+  },
+  "mcp": {
+    "mem0": {
+      "type": "local",
+      "command": ["${PYTHON_PATH}", "${CONFIG_DIR}/mem0_mcp.py"],
+      "enabled": true,
+      "timeout": 30000
     },
     "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
-      }
-    }
-  },
-  "plugins": {
-    "@opencode-ai/plugin-dcp": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}"
+      },
       "enabled": true
     },
-    "@opencode-ai/plugin-oh-my-openagent": {
+    "codegraph": {
+      "type": "local",
+      "command": ["codegraph", "serve", "--mcp"],
       "enabled": true,
-      "models": {
-        "agents": {},
-        "categories": {}
-      }
+      "timeout": 10000
     },
-    "@opencode-ai/plugin-tokenscope": {
-      "enabled": true
-    },
-    "@opencode-ai/plugin-firecrawl": {
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
       "enabled": true,
-      "apiKey": ""
-    },
-    "superpowers": {
-      "enabled": true
+      "timeout": 15000
     }
-  },
-  "customAgentPath": "${CONFIG_DIR}/agents",
-  "customCommandPath": "${CONFIG_DIR}/commands",
-  "customSkillPath": "${CONFIG_DIR}/skills",
-  "llm": {
-    "provider": "go",
-    "baseUrl": "${LLM_BASE_URL}",
-    "apiKey": "${LLM_API_KEY}",
-    "model": "${MODEL_ID}"
-  },
-  "models": {
-    "default": "${MODEL_ID}"
   }
 }

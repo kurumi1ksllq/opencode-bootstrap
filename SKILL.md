@@ -93,15 +93,16 @@ Copy `payload/opencode.json`, `payload/AGENTS.md`, `payload/oh-my-openagent.json
 
 **IMPORTANT**: For opencode.json, the AI must first read the file and replace all `${VAR}` placeholder values with the user's actual values before copying. Ask the user for any missing environment variables:
 
-| Placeholder    | What to ask                                                             |
-| -------------- | ----------------------------------------------------------------------- |
-| `CONFIG_DIR`   | "What's your OpenCode config directory? (default: ~/.config/opencode)"  |
-| `LLM_BASE_URL` | "What's your LLM provider endpoint? (e.g. https://api.openai.com/v1)"   |
-| `LLM_API_KEY`  | "What's your LLM API key?"                                              |
-| `MODEL_ID`     | "What's your default model ID? (e.g. gpt-4o, claude-sonnet-4-20250514)" |
-| `GITHUB_TOKEN` | "What's your GitHub token for MCP access?"                              |
-| `GO_API_KEY`   | "What's your GO (OpenRouter/OpenCode) API key for mem0?"                |
-| `PYTHON_PATH`  | "What's your Python executable path? (e.g. python3, or full path)"      |
+| Placeholder    | What to ask                                                                      |
+| -------------- | -------------------------------------------------------------------------------- |
+| `CONFIG_DIR`   | "What's your OpenCode config directory? (default: ~/.config/opencode)"           |
+| `LLM_BASE_URL` | "What's your LLM provider endpoint? (e.g. http://220.205.16.48:20005/v1)"        |
+| `LLM_API_KEY`  | "What's your LLM API key?"                                                       |
+| `MODEL_ID`     | "What's your default model ID? (e.g. deepseek-v4-flash)"                         |
+| `MODEL_NAME`   | "What's the display name for your model? (e.g. DeepSeek V4 Flash)"               |
+| `GITHUB_TOKEN` | "What's your GitHub Copilot token for MCP access?"                               |
+| `GO_API_KEY`   | "What's your GO (OpenRouter/OpenCode) API key for mem0?"                         |
+| `PYTHON_PATH`  | "What's your Python executable path? (e.g. D:\ProgramData\miniconda\python.exe)" |
 
 For `oh-my-openagent.json`, replace `${MODEL_ID}` with the model name the user chooses.
 
