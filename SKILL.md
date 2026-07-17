@@ -508,10 +508,9 @@ tar xzf opencode-skills.tar.gz -C ~/.config/opencode/skills/
 ```
 
 **Option B — Clone from git repo:**
-Create a separate repo for your skill files, then:
 
 ```bash
-git clone <your-skills-repo-url> /tmp/opencode-skills
+git clone https://github.com/kurumi1ksllq/opencode-skills.git /tmp/opencode-skills
 cp -r /tmp/opencode-skills/* ~/.config/opencode/skills/
 ```
 
