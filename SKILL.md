@@ -497,18 +497,26 @@ if __name__ == "__main__":
 
 The 40+ skill files are too numerous to embed inline. Do this:
 
-**Option A — Clone from git repo (recommended):**
+**Option A — Copy from existing install (recommended):**
+If you already have these skills on another machine, copy them over:
 
 ```bash
-# Clone the skills repository
-git clone https://github.com/<owner>/opencode-skills /tmp/opencode-skills
-
-# Copy all skills to config directory
-cp -r /tmp/opencode-skills/skills/* ~/.config/opencode/skills/
+# From the machine that has the skills
+tar czf opencode-skills.tar.gz -C ~/.config/opencode/skills .
+# Transfer and extract on the new machine
+tar xzf opencode-skills.tar.gz -C ~/.config/opencode/skills/
 ```
 
-**Option B — Manual download:**
-If no git repo is available, create each skill directory individually. The skills needed are:
+**Option B — Clone from git repo:**
+Create a separate repo for your skill files, then:
+
+```bash
+git clone <your-skills-repo-url> /tmp/opencode-skills
+cp -r /tmp/opencode-skills/* ~/.config/opencode/skills/
+```
+
+**Option C — Manual creation:**
+If no source is available, create each skill directory individually. The skills needed are:
 
 ```
 agent-skills/     → api-and-interface-design, browser-testing-with-devtools, ci-cd-and-automation,
