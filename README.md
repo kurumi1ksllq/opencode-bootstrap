@@ -2,7 +2,7 @@
 
 **一键部署完整的 OpenCode AI 开发环境** — MCP 服务器、自定义 Agent、40+ 技能、插件系统，全部自动安装。
 
-> 把这个 skill 丢给 AI，说一句 **"部署 opencode bootstrap"**，全自动搞定。
+> 跟 AI 说一句 **"帮我部署 opencode bootstrap"**，全自动搞定。
 
 ---
 
@@ -49,16 +49,21 @@ powershell -c "iex ((New-Object System.Net.WebClient).DownloadString('https://ra
 
 ## AI 自动部署
 
-```bash
-git clone https://github.com/kurumi1ksllq/opencode-bootstrap.git
-cp -r opencode-bootstrap ~/.agents/skills/
-```
+打开 OpenCode，对 AI 说这一句话：
 
-打开 OpenCode，对 AI 说：
+> **"帮我部署 opencode bootstrap，仓库 https://github.com/kurumi1ksllq/opencode-bootstrap.git"**
 
-> **"部署 opencode bootstrap"**
+AI 会自动完成：
 
-AI 会自动帮你完成全部流程，并询问 API 配置。
+1. 克隆仓库，读取 SKILL.md 中的部署指令
+2. 安装系统依赖（mem0、codegraph）
+3. 创建目录结构，部署 40+ 技能和配置文件
+4. 逐一询问 API 配置并替换 `${VAR}` 占位符
+5. 安装 npm 插件
+6. 复制 bootstrap skill 到 `~/.agents/skills/`
+7. 验证部署结果
+
+**全程无需手动操作。** 不需要先 clone，不需要先复制文件，一句话就够了。
 
 ---
 
@@ -237,7 +242,7 @@ opencode-bootstrap/
 curl -fsSL https://raw.githubusercontent.com/kurumi1ksllq/opencode-bootstrap/master/scripts/install.sh | bash
 ```
 
-或者把 bootstrap skill 复制到 `~/.agents/skills/` 后，对 AI 再说一次 **"部署 opencode bootstrap"**。
+或者对 AI 再说一次 **"帮我部署 opencode bootstrap"**。
 
 ### Q: 支持哪些平台？
 
