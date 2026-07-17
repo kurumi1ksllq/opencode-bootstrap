@@ -19,7 +19,7 @@ from mem0 import Memory
 
 # ============ 配置 ============
 LOCAL_MODEL_PATH = os.path.expanduser("~/.cache/bge-local")
-GO_API_KEY = "sk-zQx7GPS4nHSRSwLIlXq4x1VIPRJgDiFjo9pm16c269ffQAn8eJn8LxgKzapPTR3w"
+GO_API_KEY = os.environ.get("GOOGLE_API_KEY", "${GO_API_KEY}")
 
 MEM0_CONFIG = {
     "version": "v2.0",

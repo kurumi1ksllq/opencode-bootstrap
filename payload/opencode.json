@@ -1,0 +1,67 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/opencode.schema.json",
+  "mcpServers": {
+    "mem0": {
+      "command": "${PYTHON_PATH}",
+      "args": ["${CONFIG_DIR}/mem0_mcp.py"],
+      "env": {
+        "GOOGLE_API_KEY": "${GO_API_KEY}"
+      }
+    },
+    "codegraph": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@opencode-ai/codegraph",
+        "run",
+        "--project",
+        "${CONFIG_DIR}/.."
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@context7/context7-mcp-server"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  },
+  "plugins": {
+    "@opencode-ai/plugin-dcp": {
+      "enabled": true
+    },
+    "@opencode-ai/plugin-oh-my-openagent": {
+      "enabled": true,
+      "models": {
+        "agents": {},
+        "categories": {}
+      }
+    },
+    "@opencode-ai/plugin-tokenscope": {
+      "enabled": true
+    },
+    "@opencode-ai/plugin-firecrawl": {
+      "enabled": true,
+      "apiKey": ""
+    },
+    "superpowers": {
+      "enabled": true
+    }
+  },
+  "customAgentPath": "${CONFIG_DIR}/agents",
+  "customCommandPath": "${CONFIG_DIR}/commands",
+  "customSkillPath": "${CONFIG_DIR}/skills",
+  "llm": {
+    "provider": "go",
+    "baseUrl": "${LLM_BASE_URL}",
+    "apiKey": "${LLM_API_KEY}",
+    "model": "${MODEL_ID}"
+  },
+  "models": {
+    "default": "${MODEL_ID}"
+  }
+}
