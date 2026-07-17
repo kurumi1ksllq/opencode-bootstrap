@@ -8,7 +8,8 @@
 
 ## 目录
 
-- [一键部署](#一键部署)
+- [一行命令安装](#一行命令安装)
+- [AI 自动部署](#ai-自动部署)
 - [手动安装](#手动安装)
 - [包含什么](#包含什么)
 - [配置说明](#配置说明)
@@ -18,7 +19,35 @@
 
 ---
 
-## 一键部署
+## 一行命令安装
+
+**一行命令搞定，无需克隆、无需手动复制。**
+
+### macOS / Linux
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/kurumi1ksllq/opencode-bootstrap/master/scripts/install.sh | bash
+```
+
+### Windows（PowerShell）
+
+```powershell
+powershell -c "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/kurumi1ksllq/opencode-bootstrap/master/scripts/install.ps1'))"
+```
+
+脚本会自动完成：
+
+```
+下载安装包 → 检查 Node.js/Python/Git → 安装 mem0/codegraph
+→ 创建目录结构 → 部署 40+ 技能和配置文件 → 安装 npm 插件
+→ 提示编辑占位符 → 完成
+```
+
+> **注意：** 安装完成后需要编辑 `~/.config/opencode/opencode.json`，把 `${VAR}` 占位符替换为你的 API 密钥（见 [配置说明](#配置说明)）。交互式终端下脚本会提示直接填写。
+
+---
+
+## AI 自动部署
 
 ```bash
 git clone https://github.com/kurumi1ksllq/opencode-bootstrap.git
@@ -29,15 +58,7 @@ cp -r opencode-bootstrap ~/.agents/skills/
 
 > **"部署 opencode bootstrap"**
 
-AI 会自动帮你完成全部流程：
-
-```
-clone 仓库 → 安装系统依赖 → 询问 API 配置 → 写入配置文件
-→ 部署 agents / commands → 复制 40+ 技能文件 → 安装 npm 插件
-→ 提示重启 OpenCode
-```
-
-重启后，整个环境立即可用。
+AI 会自动帮你完成全部流程，并询问 API 配置。
 
 ---
 
@@ -52,70 +73,35 @@ git clone https://github.com/kurumi1ksllq/opencode-bootstrap.git
 cd opencode-bootstrap
 ```
 
-### 2. 安装系统依赖
+### 2. 一键安装脚本
 
 **Windows（PowerShell）：**
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/install-deps.ps1
+powershell -ExecutionPolicy Bypass -File scripts/install.ps1
 ```
 
 **macOS / Linux：**
 
 ```bash
-bash scripts/install-deps.sh
+bash scripts/install.sh
 ```
 
-手动安装的话，需要装这些：
+这个脚本会完成依赖安装、文件部署、npm 插件安装全部步骤。
+
+### 3. 编辑配置文件
 
 ```bash
-pip install mcp mem0ai                          # mem0 记忆 MCP
-npm install -g @opencode-ai/codegraph           # codegraph 代码智能
-```
+# 编辑 opencode.json，替换所有 ${VAR} 占位符
+notepad ~/.config/opencode/opencode.json
 
-### 3. 复制配置文件
-
-**Windows（PowerShell）：**
-
-```powershell
-$configDir = "$env:USERPROFILE\.config\opencode"
-mkdir -Force $configDir\skills\agent-skills
-mkdir -Force $configDir\skills\engineering
-mkdir -Force $configDir\skills\in-progress
-mkdir -Force $configDir\skills\misc
-mkdir -Force $configDir\skills\personal
-mkdir -Force $configDir\skills\productivity
-mkdir -Force $configDir\agents
-mkdir -Force $configDir\commands
-
-Copy-Item payload\opencode.json, payload\AGENTS.md, payload\oh-my-openagent.json, payload\dcp.jsonc $configDir\
-Copy-Item -Recurse payload\agents, payload\commands, payload\mem0_mcp.py $configDir\
-Copy-Item -Recurse payload\skills\* $configDir\skills\
-```
-
-**macOS / Linux：**
-
-```bash
-mkdir -p ~/.config/opencode/skills/{agent-skills,engineering,in-progress,misc,personal,productivity}
-mkdir -p ~/.config/opencode/{agents,commands}
-
-cp payload/opencode.json payload/AGENTS.md payload/oh-my-openagent.json payload/dcp.jsonc ~/.config/opencode/
-cp -r payload/agents payload/commands payload/mem0_mcp.py ~/.config/opencode/
-cp -r payload/skills/* ~/.config/opencode/skills/
+# 可选：编辑 agent 配置
+notepad ~/.config/opencode/oh-my-openagent.json
 ```
 
 > **重要：** 复制前先编辑 `opencode.json`，把 `${VAR}` 占位符替换为实际值（见 [配置说明](#配置说明)）。
 
-### 4. 安装插件
-
-```bash
-cd ~/.config/opencode
-npm init -y
-npm install @opencode-ai/plugin
-npm install superpowers@github:obra/superpowers
-```
-
-### 5. 重启 OpenCode
+### 4. 重启 OpenCode
 
 重启后即可使用全部功能。可在 OpenCode 中验证：
 
@@ -206,8 +192,10 @@ opencode-bootstrap/
 ├── SKILL.md                        # 核心：AI 执行的部署指令
 │
 ├── scripts/
-│   ├── install-deps.ps1            # Windows 依赖安装脚本
-│   └── install-deps.sh             # Unix 依赖安装脚本
+│   ├── install.ps1                 # Windows 一键安装脚本（支持 curl pipe）
+│   ├── install.sh                  # Unix 一键安装脚本（支持 curl pipe）
+│   ├── install-deps.ps1            # Windows 系统依赖安装（被 install.ps1 调用）
+│   └── install-deps.sh             # Unix 系统依赖安装（被 install.sh 调用）
 │
 ├── payload/                        # 部署到 ~/.config/opencode/ 的所有文件
 │   ├── opencode.json               # OpenCode 核心配置（${VAR} 占位符）
@@ -242,7 +230,14 @@ opencode-bootstrap/
 
 ### Q: 如何重新部署？
 
-把 bootstrap skill 复制到 `~/.agents/skills/` 后，对 AI 再说一次 **"部署 opencode bootstrap"** 即可。
+重新执行一行命令即可，脚本会覆盖安装已有文件：
+
+```bash
+# macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/kurumi1ksllq/opencode-bootstrap/master/scripts/install.sh | bash
+```
+
+或者把 bootstrap skill 复制到 `~/.agents/skills/` 后，对 AI 再说一次 **"部署 opencode bootstrap"**。
 
 ### Q: 支持哪些平台？
 
