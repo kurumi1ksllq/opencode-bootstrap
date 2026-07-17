@@ -49,6 +49,7 @@ echo -e "\n[4/5] Installing plugin dependencies..."
 cd "$CONFIG_DIR"
 [ ! -f package.json ] && npm init -y >/dev/null
 npm install @opencode-ai/plugin --quiet
+npm install superpowers@github:obra/superpowers --quiet
 echo "  OK"
 
 # ---- Phase 5: Done ----

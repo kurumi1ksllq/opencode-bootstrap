@@ -63,6 +63,7 @@ if (-not (Test-Path "package.json")) {
     npm init -y | Out-Null
 }
 npm install @opencode-ai/plugin --quiet
+npm install superpowers@github:obra/superpowers --quiet
 Pop-Location
 Write-Host "  npm dependencies installed" -ForegroundColor Green
 

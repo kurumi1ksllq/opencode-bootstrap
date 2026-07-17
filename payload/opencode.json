@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/opencode.schema.json",
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
   "mcpServers": {
     "mem0": {
       "command": "${PYTHON_PATH}",

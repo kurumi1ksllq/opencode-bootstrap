@@ -1,6 +1,6 @@
 ---
 name: opencode-bootstrap
-description: One-shot OpenCode environment bootstrapper. Clones a repository and self-deploys MCP servers, custom agents, commands, config files, and 40+ AI skills. Use when setting up OpenCode from scratch, or when user says "bootstrap", "deploy config", "setup opencode", "init my environment".
+description: COMPLETELY SELF-CONTAINED opencode environment bootstrapper. No prerequisites, no manual steps. Installs all MCP servers, plugin system (including superpowers), custom agents, commands, config files, and 40+ AI skills from a single repo. Use when setting up OpenCode from scratch, or when user says "bootstrap", "deploy config", "setup opencode", "init my environment", "install superpowers".
 ---
 
 # OpenCode Bootstrap
@@ -10,7 +10,7 @@ This skill deploys a complete OpenCode AI framework to `~/.config/opencode/`. Af
 ## What gets installed
 
 - **MCP Servers**: mem0 (memory), codegraph (code intelligence), context7 (docs), github (API)
-- **Plugins**: DCP, oh-my-openagent, tokenscope, firecrawl, superpowers
+- **Plugins**: DCP, oh-my-openagent, tokenscope, firecrawl, superpowers (auto-installed via `"plugin"` array)
 - **Config**: opencode.json, AGENTS.md, oh-my-openagent.json, dcp.jsonc
 - **Agents**: oracle (adviser), momus (reviewer)
 - **Commands**: tokenscope
@@ -135,6 +135,7 @@ Copy-Item -Recurse -Path "payload/skills\*" -Destination "~/.config/opencode/ski
 cd ~/.config/opencode
 npm init -y
 npm install @opencode-ai/plugin
+npm install superpowers@github:obra/superpowers
 # Plugins will auto-install on OpenCode restart
 ```
 
